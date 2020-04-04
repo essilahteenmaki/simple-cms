@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>Kiinteistöt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-light bg-light">
+ 		<div class="container d-flex flex-column flex-md-row justify-content-between">
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/premises">Myytävät tilat</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/files">Tiedostot</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/all">Kaikki toimitilat</a>
+  			<a sec:authorize="hasAuthority('ADMIN')" href="/signUp" class="btn btn-success">Lisää Käyttäjä</a>
+  		</div>
+	</nav>
+
+	</nav>
+	
+	<div align="center" class="jumbotron" >
+		<h1>Myynnissä olevat kiinteistöt</h1>
+		<h2 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]!</h2>
+		<form  th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger">
+		</form>
+		<h3 th:text="${viesti}" />
+	</div>
+	
+
+	
+    <table class="table table-striped"> 
+    
+   		<tr>
+   		 	<th>Osoite</th>
+   		 	<th>Kaupunki</th>
+   		 	<th>Kuvaus</th>
+   		 	<th>Tilatyyppi</th>
+   		 	<th>Kuva</th>
+   		 	<th sec:authorize="hasAuthority('ADMIN')">Poista myynnistä</th>
+   		 	<th sec:authorize="hasAuthority('ADMIN')">Muokkaa</th>
+    	</tr>
+    	
+    	<tr th:each = "premise : ${premises}" height="100">
+    		<td th:text="${premise.address}"></td>
+    		<td th:text="${premise.city}"></td>
+    		<td th:text="${premise.description}"></td> 	
+    		<td th:text="${premise.type.name}"></td>	
+    		<td> <img th:src="${premise.img}" height="100"></td> 	
+    		<td sec:authorize="hasAuthority('ADMIN')"> <a th:href="@{/deletesold/{id}(id=${premise.id})}" class="btn btn-outline-danger"> Poista myynnistä</a></td> 	
+    		<td sec:authorize="hasAuthority('ADMIN')"> <a th:href="@{/edit/{id}(id=${premise.id})}" class="btn btn-outline-warning"> Muokkaa </a></td> 		
+    	</tr>
+
+ 
+     </table>
+     
+       <a sec:authorize="hasAuthority('ADMIN')" href="/add" class="btn btn-success">Lisää toimitila</a>
+       
+  
+     
+     
+     
+
+
+</body>
+</html>

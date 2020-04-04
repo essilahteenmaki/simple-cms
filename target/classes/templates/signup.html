@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>Luo käyttäjä</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	 <nav class="site-header sticky-top py-1">
+ 		<div class="container d-flex flex-column flex-md-row justify-content-between">
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/premises">Myytävät tilat</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/files">Tiedostot</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/all">Kaikki toimitilat</a>
+  			<a sec:authorize="hasAuthority('ADMIN')" href="/signUp" class="btn btn-success">Lisää Käyttäjä</a>
+  		</div>
+	</nav>
+	
+	<div align="center" class="jumbotron" >
+		<h1>Luo uusia käyttäjiä</h1>
+		<form  th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger">
+		</form>
+	</div>
+	
+	<div align="center">
+	<form th:object="${signUp}" th:action="@{/saveuser}" action="#" method="post">
+			 <table> 
+				<tr>
+		  			<td><label for="user">Käyttäjätunnus</label></td>
+					<td><input type="text" id="user" th:field="*{user}" /></td>
+					<td th:if="${#fields.hasErrors('user')}" th:errors="*{user}">Error </td>
+				</tr>
+				<tr>
+		  			<td><label for="psw">Salasana</label></td>
+					<td><input type="text" id="psw" th:field="*{psw}" /></td>
+					<td th:if="${#fields.hasErrors('psw')}" th:errors="*{psw}">Error </td>
+				</tr>
+				<tr>
+					<td><label for="pswCheck">Toista salasana</label></td>
+					<td><input type="text" id="pswCheck" th:field="*{pswCheck}" /></td>
+					<td th:if="${#fields.hasErrors('pswCheck')}" th:errors="*{pswCheck}">Error </td>
+				</tr>
+
+				<tr>
+					<td><label for="role">Tyyppi</label></td>
+					<td><select th:field="*{role}">
+    					<option th:value="'USER'" th:text="User"></option>
+    					<option th:value="'ADMIN'" th:text="Admin"></option>
+						</select></td>
+				</tr>
+				
+				<tr>
+			<td><input type="submit" value="Tallenna"></input></td>
+				</tr>
+		</table>
+	
+	</form>
+	</div>
+	 
+									<!-- PIILOTA SALASANA KUN KIRJOITTAA -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>Kiinteistöt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	 <nav class="navbar navbar-light bg-light">
+   		<div class="container d-flex flex-column flex-md-row justify-content-between">
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/premises">Myytävät tilat</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/files">Tiedostot</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/all">Kaikki toimitilat</a>
+  			<a sec:authorize="hasAuthority('ADMIN')" href="/signUp" class="btn btn-success">Lisää Käyttäjä</a>
+  		</div>
+	</nav>
+	
+	<div align="center" class="jumbotron" >
+		<h1>Kuvatiedostot</h1>
+		<form  th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger">
+		</form>
+		<h3 th:text="${viesti}" ></h3>
+	</div>
+	
+      <table class="table table-striped"> 
+   		<tr>
+   		 	<th>Nimi</th>
+			<th>Tyyppi</th>
+			<th>Lataa tiedosto</th>
+			<th>Poista</th>
+    	</tr>   	
+    	<tr th:each = "file : ${tiedostot}">
+    		<td th:text="${file.name}"></td>
+			<td th:text="${file.type}"></td>
+			<td><a  th:href="@{/file/{id}(id=${file.fileid})}">Lataa kuvatiedosto</a></td>
+			<td><a th:href="@{/deleteFile/{id}(id=${file.fileid})}" class="btn btn-outline-danger"> Poista </a></td>
+    	</tr>
+     </table>
+     
+      <a sec:authorize="hasAuthority('ADMIN')" href="/upload" class="btn btn-success">Lisää tiedosto</a>
+
+</body>
+</html>

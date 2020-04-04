@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Kiinteistöt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	 <nav class="navbar navbar-light bg-light">
+ 		<div class="container d-flex flex-column flex-md-row justify-content-between">
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/premises">Myytävät tilat</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/files">Tiedostot</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/all">Kaikki toimitilat</a>
+  			<a sec:authorize="hasAuthority('ADMIN')" href="/signUp" class="btn btn-success">Lisää Käyttäjä</a>
+  		</div>
+	</nav>
+	
+	 <div align="center" class="jumbotron" >
+		<h1>Lisää toimitila</h1>
+		<form  th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger">
+		</form>
+	</div>
+	
+	
+	<div align="center">
+			<form action="#" th:object="${premise}" th:action="@{/save}" method="post">
+			
+			<table> 
+				<tr>
+		  	<td><label for="address">Osoite</label></td>
+			<td><input type="text" id="address" th:field="*{address}" /></td>
+			<td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error </td>
+				</tr>
+				<tr>
+		  	<td><label for="city">Kaupunki</label></td>
+			<td><input type="text" id="city" th:field="*{city}" /></td>
+			<td th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Error </td>
+				</tr>
+				<tr>
+			<td><label for="description">Kuvaus</label></td>
+			<td><input type="text" id="description" th:field="*{description}" /></td>
+				</tr>
+				
+				<tr>
+			<td><label for="img">Linkki kuvaan</label></td>
+			<td><input type="text" id="img" th:field="*{img}" /></td>
+				</tr>
+				
+				<tr>
+			<td><label for="typelist">Tyyppi</label></td>
+			<td><select id="typelist" th:field="*{type}">
+				<option th:each="type: ${types}" th:value="${type.typeid}" th:text="${type.name}"></option>
+			</select></td>
+				</tr>
+				
+			<tr>
+			<td><label for="myynnissa">Myynnissä: </label></td>
+			<td><select id="myynnissa" th:field="*{myynnissa}">
+			<option value="1"> Myynnissä </option>
+			<option value="0"> Ei myynnissä </option>
+			</select></td>
+			</tr>
+				
+				
+				<tr>
+			<td colspan="3"><input type="submit" value="Tallenna"></input></td>
+				</tr>
+		</table>
+	</form>
+	</div>
+	
+
+	
+	
+
+</body>
+</html>

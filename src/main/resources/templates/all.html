@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Kiinteistöt</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	 <nav class="navbar navbar-light bg-light">
+ 		<div class="container d-flex flex-column flex-md-row justify-content-between">
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/premises">Myytävät tilat</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/files">Tiedostot</a>
+    		<a sec:authorize="hasAuthority('ADMIN')" style="color: black;" class="py-2 d-none d-md-inline-block" href="/all">Kaikki toimitilat</a>
+  			<a sec:authorize="hasAuthority('ADMIN')" href="/signUp" class="btn btn-success">Lisää Käyttäjä</a>
+  		</div>
+	</nav>
+	
+	<div align="center" class="jumbotron" >
+		<h1>Kaikki kiinteistöt</h1>
+		<form  th:action="@{/logout}" method="post">
+		<input type="submit" value="Kirjaudu ulos" class="btn btn-outline-danger">
+		</form>
+	</div>
+	
+    <table class="table table-striped"> 
+    
+   		<tr>
+   		 	<th>Osoite</th>
+   		 	<th>Kaupunki</th>
+   		 	<th>Kuvaus</th>
+   		 	<th>Tilatyyppi</th>
+   		 	<th>Kuva</th>
+   		 	<th>Myynnissä</th>
+   		 	<th>Poista</th>
+   		 	<th>Muokkaa</th>
+    	</tr>
+    	
+    	<tr th:each = "premise : ${premises}">
+    		<td th:text="${premise.address}"></td>
+    		<td th:text="${premise.city}"></td>
+    		<td th:text="${premise.description}"></td> 	
+    		<td th:text="${premise.type.name}"></td>	
+    		<td> <img th:src="${premise.img}" height="100"></td> 	
+    		<td th:text="${premise.myynnissa}"></td> 	
+    		<td> <a th:href="@{/delete/{id}(id=${premise.id})}" class="btn btn-outline-danger"> Poista </a></td> 	
+    		<td> <a th:href="@{/edit/{id}(id=${premise.id})}" class="btn btn-outline-warning"> Muokkaa </a></td> 		
+    	</tr>
+
+ 
+     </table>
+     
+       <a href="/add" class="btn btn-success">Lisää</a>
+ 
+     
+
+</body>
+</html>

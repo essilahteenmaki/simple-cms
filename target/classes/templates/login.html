@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Kirjaudu sisään</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<div align="center" class="jumbotron" >
+		<h1>Kirjaudu sisään käyttääksesi sivua</h1>
+		<p> User- ja admin-käyttäjillä on eritasoiset oikeudet </p>
+	</div>
+
+	<div  align="center" th:if="${param.error}">Väärät tunnukset. </div>
+	<div  align="center" th:if="${param.logout}"> Olet kirjautunut ulos. </div> <br>
+
+
+<div align="center">
+	<form th:action="@{/login}" method="post">
+	<div class="form-group"><label> Tunnus : <input type="text" name="username"/> </label></div>
+	<div class="form-group"><label> Salasana: <input type="password" name="password"/> </label></div> 
+	<div class="form-group"><input type="submit" value="Kirjaudu sisään" class="btn btn-success"></div>
+	</form>
+</div>
+	
+	
+</body>

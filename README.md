@@ -1,4 +1,6 @@
-# springboot
-First Spring Boot practice project for school
+# Content management system
 
-Basic crud practice with model and view, using spring boot, thymeleaf, basic auth, mariadb, java etc.
+Spring MVC web application for content management using Thymeleaf, Spring Boot, MariaDB, Java, html/css, Bootstrap etc.
+CRUD-functions, file handling & basic authentication
+
+Backend programming course project
